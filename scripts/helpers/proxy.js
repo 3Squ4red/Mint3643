@@ -1,4 +1,4 @@
-const { ethers, upgrades } = require("hardhat");
+const { ethers } = require("hardhat");
 const onchainid = require("@onchain-id/solidity");
 
 async function deployIdentityProxy(identityIssuer) {
