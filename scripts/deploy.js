@@ -49,9 +49,9 @@ async function main() {
   const trustedIssuersRegistry = await TrustedIssuersRegistry.deploy();
   await trustedIssuersRegistry.deployed();
   const identityRegistry = await IdentityRegistry.deploy(
+    trustedIssuersRegistry.address,
     claimTopicsRegistry.address,
-    identityRegistryStorage.address,
-    trustedIssuersRegistry.address
+    identityRegistryStorage.address
   );
   await identityRegistry.deployed();
   const defaultCompliance = await Compliance.deploy();
@@ -101,9 +101,11 @@ async function main() {
   const hexedData1 = ethers.utils.formatBytes32String(
     "Yea no, this guy is totes legit"
   );
-  const hashedDataToSign1 = ethers.utils.solidityKeccak256(
-    ["address", "uint256", "bytes"],
-    [user1Contract.address, 7, hexedData1]
+  const hashedDataToSign1 = ethers.utils.keccak256(
+    ethers.utils.defaultAbiCoder.encode(
+      ["address", "uint256", "bytes"],
+      [user1Contract.address, 7, hexedData1]
+    )
   );
   const signature1 = await signer.signMessage(
     ethers.utils.arrayify(hashedDataToSign1)
@@ -118,9 +120,11 @@ async function main() {
   const hexedData2 = ethers.utils.formatBytes32String(
     "Yea no, this guy is totes legit"
   );
-  const hashedDataToSign2 = ethers.utils.solidityKeccak256(
-    ["address", "uint256", "bytes"],
-    [user2Contract.address, 7, hexedData2]
+  const hashedDataToSign2 = ethers.utils.keccak256(
+    ethers.utils.defaultAbiCoder.encode(
+      ["address", "uint256", "bytes"],
+      [user2Contract.address, 7, hexedData2]
+    )
   );
   const signature2 = await signer.signMessage(
     ethers.utils.arrayify(hashedDataToSign2)
@@ -151,9 +155,16 @@ async function main() {
   await identityRegistry
     .connect(agent)
     .registerIdentity(user1.address, user1Contract.address, 91);
-  // await identityRegistry
-  //   .connect(agent)
-  //   .registerIdentity(user2.address, user2Contract.address, 101);
+  await identityRegistry
+    .connect(agent)
+    .registerIdentity(user2.address, user2Contract.address, 101);
+
+  await token.connect(agent).mint(user1.address, 1000);
+
+  console.log(
+    `${user1.address} has a balance of `,
+    (await token.balanceOf(user1.address)).toNumber()
+  ); // YAYYYY!!! 🥳🎈🎉🎊
 }
 
 // We recommend this pattern to be able to use async/await everywhere
