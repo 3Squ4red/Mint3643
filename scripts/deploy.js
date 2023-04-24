@@ -36,7 +36,7 @@ async function main() {
     "ImplementationAuthority"
   );
   const ClaimIssuer = await ethers.getContractFactory("ClaimIssuer");
-  const AgentManager = await ethers.getContractFactory("AgentManager");
+  // const AgentManager = await ethers.getContractFactory("AgentManager");
   // const OwnerManager = await ethers.getContractFactory("OwnerManager");
   // const LimitCompliance = await ethers.getContractFactory("LimitHolder");
   // const DVDTransferManager = await ethers.getContractFactory(
