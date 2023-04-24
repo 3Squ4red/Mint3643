@@ -8,7 +8,7 @@ async function main() {
   const claimIssuer = accounts[1];
   const user1 = accounts[2];
   const user2 = accounts[3];
-  const agent = accounts[8];
+  const agent = accounts[4];
 
   // Tokeny created another account to sign the claim for the users
   // However, I am going to let the claim issuer himself do this
