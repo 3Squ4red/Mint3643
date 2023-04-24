@@ -10,9 +10,11 @@ async function main() {
   const user2 = accounts[3];
   const agent = accounts[8];
 
-  const signer = ethers.Wallet.createRandom();
+  // Tokeny created another account to sign the claim for the users
+  // However, I am going to let the claim issuer himself do this
+  // const signer = ethers.Wallet.createRandom();
   const signerKey = ethers.utils.keccak256(
-    ethers.utils.defaultAbiCoder.encode(["address"], [signer.address])
+    ethers.utils.defaultAbiCoder.encode(["address"], [claimIssuer.address])
   );
 
   // Token essentials
@@ -107,7 +109,7 @@ async function main() {
       [user1Contract.address, 7, hexedData1]
     )
   );
-  const signature1 = await signer.signMessage(
+  const signature1 = await claimIssuer.signMessage(
     ethers.utils.arrayify(hashedDataToSign1)
   );
   // user1 adds claim to identity contract
@@ -126,7 +128,7 @@ async function main() {
       [user2Contract.address, 7, hexedData2]
     )
   );
-  const signature2 = await signer.signMessage(
+  const signature2 = await claimIssuer.signMessage(
     ethers.utils.arrayify(hashedDataToSign2)
   );
   // user2 adds claim to identity contract
@@ -162,7 +164,7 @@ async function main() {
   await token.connect(agent).mint(user1.address, 1000);
 
   console.log(
-    `${user1.address} has a balance of `,
+    `user1 (${user1.address}) has a balance of`,
     (await token.balanceOf(user1.address)).toNumber()
   ); // YAYYYY!!! 🥳🎈🎉🎊
 }
