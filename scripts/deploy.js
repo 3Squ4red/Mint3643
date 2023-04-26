@@ -163,9 +163,23 @@ async function main() {
 
   await token.connect(agent).mint(user1.address, 1000);
 
+  console.log("\n--------------------ERC CONTRACTS--------------------\n");
+  console.log(`Token (proxy): ${proxy.address}`);
+  console.log(`IdentityRegistry: ${identityRegistry.address}`);
+  console.log(`Compliance: ${defaultCompliance.address}`);
+  console.log(`ClaimTopicsRegistry: ${claimTopicsRegistry.address}`);
+  console.log(`IdentityRegistryStorage: ${identityRegistryStorage.address}`);
+  console.log(`TrustedIssuersRegistry: ${trustedIssuersRegistry.address}`);
+  console.log("\n--------------------IDENTITY CONTRACTS--------------------\n");
+  console.log(`Token (Tokeny): ${tokenOnchainID.address}`);
+  console.log(`Claim Issuer: ${claimIssuerContract.address}`);
+  console.log(`user1: ${user1Contract.address}`);
+  console.log(`user2: ${user2Contract.address}`);
+
   console.log(
-    `user1 (${user1.address}) has a balance of`,
-    (await token.balanceOf(user1.address)).toNumber()
+    `\nuser1 (${user1.address}) has a balance of ${(
+      await token.balanceOf(user1.address)
+    ).toNumber()} TREX\n`
   );
 }
 

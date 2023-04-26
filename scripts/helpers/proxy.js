@@ -38,34 +38,3 @@ async function deployIdentityProxy(identityIssuer) {
 module.exports = {
   deployIdentityProxy,
 };
-
-/**
- * 
-
-async function deployIdentityProxy(identityIssuer) {
-  // factories
-  const Identity = await ethers.getContractFactory("Identity");
-  const ImplementationAuthority = await ethers.getContractFactory(
-    "IDImplementationAuthority"
-  );
-  const IDProxy = await ethers.getContractFactory("IdentityProxy");
-
-  // deployment
-  const identity = await Identity.connect(identityIssuer).deploy(
-    identityIssuer.address,
-    true
-  );
-  await identity.deployed();
-  const implementationAuthority = await ImplementationAuthority.deploy(
-    identity.address
-  );
-  await implementationAuthority.deployed();
-  const idProxy = await IDProxy.deploy(
-    implementationAuthority.address,
-    identityIssuer.address
-  );
-  await idProxy.deployed();
-
-  return Identity.attach(idProxy.address);
-  }
- */
