@@ -166,7 +166,7 @@ async function main() {
   console.log(
     `user1 (${user1.address}) has a balance of`,
     (await token.balanceOf(user1.address)).toNumber()
-  ); // YAYYYY!!! 🥳🎈🎉🎊
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
